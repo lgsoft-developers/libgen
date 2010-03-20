@@ -25,7 +25,7 @@ function amazonInfo($isbn, $public_key, $private_key){
             $result['EAN']=$pxml->Items->Item->ItemAttributes->EAN;
             $result['Edition']=$pxml->Items->Item->ItemAttributes->Edition;
             $result['Pages']=$pxml->Items->Item->ItemAttributes->NumberOfPages;
-            $result['Year']=$pxml->Items->Item->ItemAttributes->PublicationDate;
+            $result['Year']=substr($pxml->Items->Item->ItemAttributes->PublicationDate,0,4);
             $result['Image']=$pxml->Items->Item->LargeImage->URL;
             $result['Content']=$pxml->Items->Item->EditorialReviews->EditorialReview->Content;
          

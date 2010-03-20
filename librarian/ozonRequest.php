@@ -108,16 +108,17 @@ if ($ozonXmlArray === False)
     $pages = split(',',$pages[1]);
     $ozonInfo['Pages'] = iconv('windows-1251', 'utf-8//IGNORE', trim($pages[1]));
     
-    $categ = split('class="detail_2cell vertpadd">',$htmlcode);
-    $categ = split('</td>',$categ[1]);
+    $categ = split('<div class="frame_content small">',$htmlcode);
+    $categ = split('</div>',$categ[1]);
     $categCode = trim($categ[0]);
     $parser = new phpHTMLParser($categCode);
     $HTMLObject = $parser->parse_tags(array("a"));
     $spans = $HTMLObject->getTagsByName("a");
     foreach ($spans as $span) {
-			$cat = $cat.'/'.$span->innerHTML;
-	}
-    $ozonInfo['Topic'] = iconv('windows-1251', 'utf-8//IGNORE', $cat); 
+         $cat = $cat.'/'.$span->innerHTML;
+   }
+    $cat = split('Каталог',$cat);
+    $ozonInfo['Topic'] = iconv('windows-1251', 'utf-8//IGNORE', $cat[1]); 
      }
      
      

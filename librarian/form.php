@@ -8,9 +8,12 @@
 	$volinfo = '';
 	$year = '';
 	$publisher = '';
+        $city = '';
 	$edition = '';
+        $series = '';
+        $periodical = '';
 	$pages = '';
-	$identifier = ''; //'ISBN '
+	$identifier = '';
 	$language = '';
 	$library = '';
 	$issue = '';
@@ -19,7 +22,7 @@
 	$color = '';
 	$cleaned = '';
 	$commentary = '';
-	$series = '';
+	$coverurl = '';
 	$udc = '';
 	$lbc = '';
 	$bookcode = '';
@@ -79,6 +82,7 @@
 		$volinfo = htmlspecialchars($rows['VolumeInfo'],ENT_QUOTES);
 		$year = $rows['Year'];
 		$publisher = htmlspecialchars($rows['Publisher'],ENT_QUOTES);
+                $city = htmlspecialchars($rows['City'],ENT_QUOTES);
 		$edition = htmlspecialchars($rows['Edition'],ENT_QUOTES);
 		$pages = htmlspecialchars($rows['Pages'],ENT_QUOTES);
 		$identifier = htmlspecialchars($rows['Identifier'],ENT_QUOTES);
@@ -91,6 +95,8 @@
 		$cleaned = htmlspecialchars($rows['Cleaned'],ENT_QUOTES);
 		$commentary = htmlspecialchars($rows['Commentary'],ENT_QUOTES);
 		$series = htmlspecialchars($rows['Series'],ENT_QUOTES);
+                $periodical = htmlspecialchars($rows['Periodical'],ENT_QUOTES);
+                $coverurl = htmlspecialchars($rows['Coverurl'],ENT_QUOTES);
 		$udc = htmlspecialchars($rows['UDC'],ENT_QUOTES);
 		$lbc = htmlspecialchars($rows['LBC'],ENT_QUOTES);
 		$bookcode = htmlspecialchars($rows['BooksellingCode'],ENT_QUOTES);
@@ -181,10 +187,12 @@ ISBN: <input type='text' name='isbn' size='20' maxlength='25' value='".htmlspeci
 <tr><td><font face=arial size=3><b>Year of Issue \\ Год издания</b></font><td><input type='text' name='Year' size=10 value='".$year."' maxlength=10/>
 <tr><td><font face=arial size=3><b>Edition \\ Издание</b></font><td><input type='text' name='Edition' size=10 value='".$edition."' maxlength=50/>
 <tr><td><font face=arial size=3><b>Series \\ Серия</b> <font size=2 color=gray>(вместе с порядковым № в серии)</font></font><td><input type='text' name='Series' size=90 value='".$series."' maxlength=300/>
+<tr><td><font face=arial size=3><b>Periodical \\ Журналы</b> <font size=2 color=gray>(вместе с №, напр. Левша 2009-06)</font></font><td><input type='text' name='Periodical' size=90 value='".$periodical."' maxlength=300/>
 <tr><td><font face=arial size=3><b><a href='http://free-books.dontexist.com/librarian/publisher.txt'>Publisher \\ Издательство</b></font><td><input type='text' name='Publisher' size=90 value='".$publisher."' maxlength=200/>
+<tr><td><font face=arial size=3><b>City \\ Город</b></font><td><input type='text' name='City' size=90 value='".$city."' maxlength=200/>
 <tr><td><font face=arial size=3><b>Number of Pages \\ Число страниц</b></font><td><input type='text' name='Pages' size=5 value='".$pages."' maxlength=10/>
 <tr><td><font face=arial size=3><b><a href='http://free-books.dontexist.com/librarian/lang.txt'>Language</b> <font size=2 color=gray>(Russian, English, ...)</font></font><td><input type='text' name='Language' size=90 value='".$language."' maxlength=50/>
-<tr><td><font face=arial size=3><b>ISBN</b> <font size=2 color=gray>(только 10 или 13 цифр без '-' и ' ')</font></font><td><input type='text' name='Identifier' size=20 value='".$identifier."' maxlength=100/>
+<tr><td><font face=arial size=3><b>ISBN</b> <font size=2 color=gray>(напр.:ISBN10:0-0000-0000-0;ISBN13:978-0-0000 0000-0)</font></font><td><input type='text' name='Identifier' size=20 value='".$identifier."' maxlength=100/>
 <tr><td><font face=arial size=3><b>Library \\ Библиотека</b> <font size=2 color=gray>(kolxoz, homelab, ...)</font></font><td><input type='text' name='Library' size=10 value='".$library."' maxlength=50/>
 <tr><td><font face=arial size=3><b>Issue \\ Издание библиотеки</b> <font size=2 color=gray>(DVD-, release №, ...)</font></font><td><input type='text' name='Issue' size=5 value='".$issue."' maxlength=10/>
 <tr><td><font face=arial size=3><b>Orientation \\ Ориентация скана</b> <font size=2 color=gray>(landscape, portrait)</font></font><td><input type='text' name='Orientation' size=15 value='".$orientation."' maxlength=50/>
@@ -193,9 +201,9 @@ ISBN: <input type='text' name='isbn' size='20' maxlength='25' value='".htmlspeci
 <tr><td><font face=arial size=3><b>Cleaned \\ Обрезанный скан</b> <font size=2 color=gray>(yes, no)</font></font><td><input type='text' name='Cleaned' size=10 value='".$cleaned."' maxlength=50/>
 <tr><td><font face=arial size=3><b>Commentary \\ Комментарий</b> <font size=2 color=gray>(5000 символов макс.)</font></font><td><input type='text' name='Commentary' size=90 value='".$commentary."' maxlength=5000/>
 <tr><td><font face=arial size=3><b>MD5 of a Better Version \\ MD5 лучшей версии</b></font><td><input type='text' name='Generic' size=35 value='".$generic."' maxlength=32/>
+<tr><td><font face=arial size=3><b>CoverURL \\ Ссылка на обложку</b> <font size=2 color=gray></font></font><td><input type='text' name='Coverurl' size=90 value='".$coverurl."' maxlength=199/>
 <tr><td><font face=arial size=3><b><a href='http://en.wikipedia.org/wiki/Universal_Decimal_Classification'>UDC \\ УДК</a></b></font><td><input type='text' name='UDC' size=90 value='".$udc."' maxlength=50/>
 <tr><td><font face=arial size=3><b><a href='http://www.indiana.edu/~libslav/slavcatman/bbkover.html'>LBC \\ ББК</a></b></font><td><input type='text' name='LBC' size=90 value='".$lbc."' maxlength=50/>
-
 <tr><td><font face=arial size=3 color=gray><b>Filesize \\ Размер файла</b> <font size=2>(bytes)</font></font><td><input readonly type='text' name='Filesize' size=10 value='".$filesize."' maxlength=20/>
 <tr><td><font face=arial size=3 color=gray><b>MD5</b></font><td><input readonly type='text' name='MD5' size=35 value='".$md5."' maxlength=32/>
 <tr><td><font face=arial size=3 color=gray><b>File Extension \\ Расширение файла</b></font><td><input readonly type='text' name='Extension' size=10 value='".$fileext."' maxlength=50/>
