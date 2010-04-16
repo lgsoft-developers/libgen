@@ -3,6 +3,7 @@
 	include 'html.php';
 	include 'strings.php';
 	include 'util.php';
+      include 'menu.html';
 
 	if (sizeof($_GET)) $mainpage = false;
 	else $mainpage = true;
@@ -29,35 +30,10 @@
      }
       </script><script src='http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'></script>";
 
+
 	$textcol1 = 'gray';//'A0A000';
 	$textcol2 = '#A00000';//'#E8E880';
-
-	$index1 = "<a href='http://free-books.dontexist.com/content/'>Contents</a>";
-	$torrents = "<a href='http://free-books.dontexist.com/repository_torrent/'>Torrents</a>";
-	$source = "<a href='http://free-books.dontexist.com/code/'>Code</a>";
-	$dbdump = "<a href='http://free-books.dontexist.com/dailyupdated/My Dropbox/Public/'>Dump DB (Daily)</a>";
-	$donate = "<a href='http://lib.rus.ec/donate'>Donate</a>";
-        $export = "<a href='http://free-books.dontexist.com/export/'>Import</a>";
-	$forum = "<a href='http://gen.lib.rus.ec/forum/'>Forum</a>";
-        $upload = "<a href='http://free-books.dontexist.com/librarian/'>Single Upload &amp; edit</a>";
-        $batchupload = "<a href='http://free-books.dontexist.com/batchupload/'>Batch Upload</a>";
-        $ftp1 = "<a href='ftp://free-books.dontexist.com/genesis/!Repository/'>1</a>";
-        $ftp2 = "<a href='ftp://free-books.dontexist.com/genesis2/!reposithoty2/'>2</a>";
-        $mirror1 = "<a href='http://gen.lib.rus.ec'>1-110k</a>";
-        $mirror2 = "<a href='http://lib.ololo.cc/gen'>2-110k</a>";
-        $comics = "<a href='http://free-books.dontexist.com/comics/'>Comics</a>";
-        $sitemap = "<a href='http://gen.lib.rus.ec/forum/viewtopic.php?p=9000/'>Sitemap</a>";
-        $biblio = "<a href='http://free-books.dontexist.com/biblio/'>Biblio</a>";
-        $newbooks = "<a href='http://free-books.dontexist.com/dailyupdated/My Dropbox/Public/!daily add/'>New books</a>";
-	//$master = "bookwarrior";
 	$footer = "</tr></table>\n";
-
-	$toolbar = "
-<table height=100% width=100% cellspacing=0 cellpadding=0>
-<tr>
-<td align=left><b><font face=Arial size=2 color={$textcol1}>{$index1}|{$torrents}|{$source}|{$dbdump}|{$export}|{$forum}|{$upload}|{$batchupload}|FTP: {$ftp1}, {$ftp2}|Mirrors: {$mirror1};  {$mirror2}|{$comics}|{$sitemap}|{$biblio}|{$newbooks}</font></b></td>
-</tr>
-</table>";
 
     $dlnametypes = array('orig' => '',
                          'md5' => '',
@@ -87,9 +63,8 @@
 	// if no arguments passed, give out the main page
 	if ($mainpage) {
 		$searchbody = "<table cellspacing=0 width=100% height=100%>
-		<th colspan=3 height=30 align=left>{$toolbar}</th>
 		<tr><td height=27% width=35% valign=top align=left></td><td></td><td width=35% valign=top align=right></td></tr>
-		<tr height=34%><td></td><td><center><table><tr><caption><font color={$textcol2}><h1>Library Genesis<sup><font size=4>231k</font></sup></h1></font></caption><td nowrap>{$form}</td></tr></table></center></td></tr>
+		<tr height=34%><td></td><td><center><table><tr><caption><font color={$textcol2}><h1>Library Genesis<sup><font size=4>237k</font></sup></h1></font></caption><td nowrap>{$form}</td></tr></table></center></td></tr>
 		<tr><td width=25% valign=bottom align=left></td><td></td><td width=25% valign=bottom align=right></td>";
 
 		//echo $toolbar;
