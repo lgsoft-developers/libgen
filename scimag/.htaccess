@@ -1,0 +1,10 @@
+DirectoryIndex index.php
+Options -Indexes
+php_value max_execution_time 3600
+php_value memory_limit 128M
+php_value display_errors 0
+php_value max_input_time 2000
+
+
+Order Allow,Deny
+Allow from all
