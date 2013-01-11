@@ -1,2 +1,11 @@
 DirectoryIndex search
-Options +MultiViews
+Options -Indexes
+php_value max_execution_time 15
+#php_value memory_limit 1024
+order deny,allow 
+php_value display_errors 0
+php_value max_input_time 360
+
+
+
+

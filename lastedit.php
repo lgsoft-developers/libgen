@@ -11,6 +11,8 @@
        }
      // -- Конец установки куки
 
+
+
 	include 'connect.php';
 	include 'html.php';
 	//include 'strings.php';
@@ -23,7 +25,6 @@
 	// SQL-requests should encode single-quotes and underscores with Esc-sequences
 	if (!$mainpage){
 
-		$req_htm_enc = urlencode($_GET['req']);
         if( isset($_GET['nametype'])) $dlnametype = $_GET['nametype'];
         else $dlnametype = "md5"; // в строке явно НЕ указан тип - скорее всего ожидается md5, в соответствии со старой версией
 	} else {
@@ -31,12 +32,17 @@
         $dlnametype = "orig";
 	}
 
-	$footer = "</tr></table>\n";
+
+	$textcol1 = 'gray';//'A0A000';
+	$textcol2 = '#A00000';//'#E8E880';
+
+
+
 
 
     $dlnametypes = array('orig' => '',
                          'translit' => '',
-                         'md5' => ''
+                          'md5' => ''
     );
     
     foreach( $dlnametypes as $key => $value ) {
@@ -62,15 +68,8 @@
 </form>
     	</form>";
 
-
-
-if(isset($_GET['column'])){
-  $columns = $_GET['column'];
-
-}
-
-
-if (@is_array($column)) {
+$column = $_GET['column'];
+if (is_array($column)) {
     $fieldslist = implode(', ', $column);
 }else{
     $fieldslist = $column;
@@ -81,20 +80,6 @@ if (@is_array($column)) {
 
 
 
-	// if no arguments passed, give out the main page
-//	if ($mainpage) {
-//		$searchbody = "<table cellspacing=0 width=100% height=100%>
-//		<th colspan=3 height=30 align=left>{$toolbar}</th>
-//		<tr><td height=27% width=35% valign=top align=left></td><td></td><td width=35% valign=top align=right></td></tr>
-//		<tr height=34%><td></td><td><center><table><tr><caption><font color={$textcol2}><h1>Library Genesis<sup><font size=4>237k</font></sup></h1></font></caption><td nowrap>{$form}</td></tr></table></center></td></tr>
-//		<tr><td width=25% valign=bottom align=left></td><td></td><td width=25% valign=bottom align=right></td>";
-//
-//		//echo $toolbar;
-//		echo $searchbody;
-//		echo $footer;
-//		echo $htmlfoot;
-//		die;
-//	}
 
 	// now look up in the database
 	$dberr = $htmlhead."<font color='#A00000'><h1>Error</h1></font>".mysql_error()."<br>Cannot proceed.<p>Please, <a href='{$errurl}'><u>report</u></a> on this error.".$htmlfoot;
@@ -110,19 +95,22 @@ if (@is_array($column)) {
 
 	if ($from < $maxlines - $lines) $from = 0;
 
-	$sql_end = "ORDER BY id desc LIMIT $from, 25";
+	$sql_end = " ORDER BY TimeLastModified desc LIMIT $from, $lines";
 	$search_words = explode(' ', $req);
-	$search_fields = "CONCAT_WS(Author, Title, Series, Publisher, Periodical, Topic) LIKE '%";
-        $sql_mid = "FROM $dbtable WHERE (Filename!='' AND Generic='' AND Visible='')";
+	$sql_mid = "FROM $dbtable WHERE (MD5!='') AND (`TimeLastModified`!=`TimeAdded`) ";
 	$sql_req = "SELECT * ".$sql_mid.$sql_end;
-	$sql_cnt = "SELECT COUNT(*) ".$sql_mid;
+	$sql_cnt = "SELECT SUM(Filesize), COUNT(*) ".$sql_mid;
 
+//echo $sql_req;
 
 	$result = mysql_query($sql_cnt,$con);
 	if (!$result) die($dberr);
 
 	$row = mysql_fetch_assoc($result);
 	$totalrows = stripslashes($row['COUNT(*)']);
+	$totalsize = stripslashes($row['SUM(Filesize)']);
+
+
 	mysql_free_result($result);
 
 	$result = mysql_query($sql_req,$con);
@@ -131,8 +119,8 @@ if (@is_array($column)) {
 	///////////////////////////////////////////////////////////////
 	// pagination
 
-	$args = "last?nametype=$dlnametype&req=$req_htm_enc&lines=$lines";
-                            //search?nametype=orig&req=g&lines=100&from=100
+	$args = "lastedit?nametype=$dlnametype&req=$req_htm_enc&lines=$lines";
+                            //search?nametype=orig&req=g&lines=50&from=100
 
 	if ($totalrows > $from + $lines){
 		$nextpage = $from + $lines;
@@ -204,20 +192,20 @@ if (@is_array($column)) {
 	$reshead = "<table width=100% cellspacing=1 cellpadding=1 rules=rows class=c align=center>";
 
 
-echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 valign=top align=right><h1>Library Genesis<sup><font size=4>800k</font></a></td></tr></table>";
-
+echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 valign=top align=right><h1>Library Genesis<sup><font size=4>800k</font></a></sup></h1></font></td></tr></table>";
 
 	echo $reshead;
-
+        echo $googletrans;
 
 	$color1 = '#D0D0D0';
 	$color2 = '#F6F6FF';
 	$color3 = '#000000';
 
-	echo "\n<b>".$totalrows." books in library<u>$req_htm</u> </b>\n";
+	//echo "\n<b>".$totalsize."\t,\t".$totalrows." books in library <u>$req_htm</u> </b>\n";
 	$navigatortop = "<tr><th valign=top bgcolor=$color1 colspan=17><font color=$color1><center><b>$prevlink1 | $nextlink1</b></center></font></th></tr>";
 	$navigatorbottom = "<tr><th valign=top bgcolor=$color1 colspan=17><font color=$color1><center><b>$prevlink2 | $nextlink2</b></center></font></th></tr>";
-	$tabheader = "<tr valign=top bgcolor=$color2><td><b>ID</b></td><td><b>".$LANG_MESS_6."</b></td><td><b>".$LANG_MESS_5."</b></td><td><b>".$LANG_MESS_9."</b></td><td><b>".$LANG_MESS_10."</b></td><td><b>".$LANG_MESS_28."</b></td><td><b>".$LANG_MESS_11."</b></td><td><b>".$LANG_MESS_26."</b></td><td><b>".$LANG_MESS_12."</b></td><td colspan=7><b>".$LANG_MESS_29."</b></td><td><b>".$LANG_MESS_30."</b></td></tr>";
+	//$tabheader = "<tr valign=top bgcolor=$color2><td><b>ID</b></td><td><b>Author</b></td><td><b>Title</b></td><td><b>Publisher</b></td><td><b>Year</b></td><td><b>Pages</b></td><td><b>Language</b></td><td><b>Size</b></td><td><b>Extension</b></td><td colspan=7><b>Mirrors</b></td><td><b>Edit</b></td></tr>";
+        $tabheader = "<tr valign=top bgcolor=$color2><td><b>ID</b></td><td><b>".$LANG_MESS_6."</b></td><td><b>".$LANG_MESS_5."</b></td><td><b>".$LANG_MESS_9."</b></td><td><b>".$LANG_MESS_10."</b></td><td><b>".$LANG_MESS_28."</b></td><td><b>".$LANG_MESS_11."</b></td><td><b>".$LANG_MESS_26."</b></td><td><b>".$LANG_MESS_12."</b></td><td colspan=7><b>".$LANG_MESS_29."</b></td><td><b>".$LANG_MESS_30."</b></td></tr>";
 	echo $navigatortop;
 	echo $tabheader;
 
@@ -239,7 +227,7 @@ echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 va
 		$edition = stripslashes($row['Edition']);
 		$ext = stripslashes($row['Extension']);
                 $ident = ereg_replace(",", ", ", $ident1);
-        
+
         $bookname = '';
         if ($series <> '') {
             $bookname = "<font face=Times color=green><i>($series) </i></font>";
@@ -300,7 +288,6 @@ echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 va
 		$ires = $from + $i;
 
 
-
 		$tip0 = "";
 		$tip1 = $LANG_MESS_40;
 		$tip3 = $LANG_MESS_41."libgen.org";
@@ -311,9 +298,10 @@ echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 va
 		$tip8 = $LANG_MESS_41."libgen.net";
 		$tip9 = $LANG_MESS_41."bookos.org";
 
-		$line = "<tr valign=top bgcolor=$color><td>$row[ID]</td>
+
+		$line = "<tr valign=top bgcolor=$color><td>$ires</td>
 		<td>$author</td>
-		<td width=500><a href='book/index.php?md5=$row[MD5]'title='' id=$ires>{$bookname}$volume$volstamp</a></td>
+		<td width=500><a href='book/index.php?md5=$row[MD5]' title='$tip0'  id=$ires>{$bookname}$volume$volstamp</a></td>
 		<td>$publisher</td>
 		<td nowrap>$year</td>
 		<td nowrap>$pages</td>
@@ -321,6 +309,12 @@ echo "<table width=100%><tr><td>$form</td><td><a href='/'><font color=#A00000 va
 		<td nowrap>$size</td>
 		<td nowrap>$ext</td>
 
+
+            
+
+
+
+	
 		<td><a href='/get?nametype=$dlnametype&md5=$row[MD5]'title='$tip3'>[1]</a></td>
 		<td><a href='http://gen.lib.rus.ec/get?nametype=$dlnametype&md5=$row[MD5]'title='$tip5'><b>[2]</b></a></td>
 		<td><a href='http://bookfi.org/md5/$row[MD5]' title='$tip4'>[3]</a></td>
