@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/tests
+END
+ISBN.phpt
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/tests/ISBN.phpt
+END

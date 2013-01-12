@@ -1,8 +1,16 @@
 DirectoryIndex registration
-Options +MultiViews
+Options -Indexes
+
+php_value max_execution_time 300
+php_value memory_limit 8M
+php_value upload_max_filesize 350000000
+php_value max_input_time 3000
+php_value post_max_size 350000000
+php_value display_errors 0
+php_value max_file_uploads 20
 
 AuthType Basic
 AuthName "Enter login and password"
-AuthUserFile "C:\Program Files\Apache Software Foundation\Apache2.2\htdocs\librarian\.htpasswd"
-AuthGroupFile "C:\Program Files\Apache Software Foundation\Apache2.2\htdocs\librarian\.htgroups"
+AuthUserFile "C:\Program Files\Apache2\htdocs\librarian\.htpasswd"
+AuthGroupFile "C:\Program Files\Apache2\htdocs\librarian\.htgroups"
 Require group genesis

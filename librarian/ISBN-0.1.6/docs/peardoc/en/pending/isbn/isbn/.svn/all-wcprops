@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn
+END
+convert.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/convert.xml
+END
+gettitle.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/gettitle.xml
+END
+getean.xml
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getean.xml
+END
+getisbndisplayable.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getisbndisplayable.xml
+END
+getversion.xml
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getversion.xml
+END
+setisbn.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/setisbn.xml
+END
+validate.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/validate.xml
+END
+getisbn.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getisbn.xml
+END
+isvalid.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/isvalid.xml
+END
+getgroup.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getgroup.xml
+END
+guessversion.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/guessversion.xml
+END
+getpublisher.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getpublisher.xml
+END
+--construct.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/--construct.xml
+END
+getcheckdigit.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/libgen/!svn/ver/21/librarian/ISBN-0.1.6/docs/peardoc/en/pending/isbn/isbn/getcheckdigit.xml
+END

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 function xml2array($xml) {
         $xmlary = array();
@@ -19,7 +19,7 @@ function xml2array($xml) {
 
                 $cdend = strpos($elements[3][$ie], "<");
                 if ($cdend > 0) {
-                        $xmlary[$ie]["text"] = substr($elements[3][$ie], 0, $cdend - 1);
+                        $xmlary[$ie]["text"] = substr($elements[3][$ie], 0, $cdend - 0);
                 }
 
                 if (preg_match($reels, $elements[3][$ie]))
@@ -45,6 +45,7 @@ function ozon_request($isbn)
     
     // do request
     $response = file_get_contents("http://".$host.$request);
+//echo  $response;
 
     if ($response === False)
     {
@@ -63,6 +64,7 @@ function ozon_request($isbn)
 
 $ozonInfo = array('error'=>'');
 $ozonXmlArray = ozon_request($isbn);
+//print_r($ozonXmlArray);
 
 if ($ozonXmlArray === False)
  {
@@ -70,61 +72,63 @@ if ($ozonXmlArray === False)
  }
  else
  {
-     if ($ozonXmlArray[13]['elements'][0]['elements'][1]['text'] != '')
+     if ($ozonXmlArray[14]['elements'][0]['elements'][1]['text'] != '')
      {
          
-         $ozonInfo['ID'] = $ozonXmlArray[13]['elements'][0]['elements'][0]['text'];
-         $ozonInfo['Title'] = $ozonXmlArray[13]['elements'][0]['elements'][1]['text'];
-         $ozonInfo['Author'] = $ozonXmlArray[13]['elements'][0]['elements'][2]['text'];
-         $ozonInfo['Year'] = $ozonXmlArray[13]['elements'][0]['elements'][5]['text'];
-         $ozonInfo['Content'] = $ozonXmlArray[13]['elements'][0]['elements'][10]['text'];
-         $ozonInfo['Image'] = $ozonXmlArray[13]['elements'][0]['elements'][11]['text'];
+         $ozonInfo['ID'] = $ozonXmlArray[14]['elements'][0]['elements'][0]['text'];
+         $ozonInfo['Title'] = $ozonXmlArray[14]['elements'][0]['elements'][1]['text'];
+         $ozonInfo['Year'] = $ozonXmlArray[14]['elements'][0]['elements'][5]['text'];
+         $ozonInfo['Picture'] = $ozonXmlArray[14]['elements'][0]['elements'][13]['text'];
         
-        // information from ozon-htmlcode
-	
-    include("phpHTMLParser.php");
+
+
+
 	
     $htmlcode = file_get_contents("http://www.ozon.ru/context/detail/id/".$ozonInfo['ID']."/");
-    $parser = new phpHTMLParser(str_replace('<br>',' ',$htmlcode));
-	$HTMLObject = $parser->parse_tags(array("td"));
-	$tds = $HTMLObject->getTagsByName("td");
-  
-    foreach ($tds as $td) {
-		if ($td->innerTag == 'class="detail_centralcell vertpadd"') {
-			$ozonInfo['Content'] = iconv('windows-1251', 'utf-8//IGNORE',$td->innerHTML);break;
-		}
-	}
-    
-    $descr = split('detail_centralcell vertpadd">',$htmlcode);
-    $descr = split('</td>',$descr[1]);
-    #echo trim($descr[0]);
-    
-    $publ = split('title="������������">',$htmlcode);
-    $publ = split('</a>',$publ[1]);
-    $ozonInfo['Publisher'] = iconv('windows-1251', 'utf-8//IGNORE', trim($publ[0]));
-    
-    $pages = split('title="������������">',$htmlcode);
-    $pages = split('<br>',$pages[1]);
-    $pages = split(',',$pages[1]);
-    $ozonInfo['Pages'] = iconv('windows-1251', 'utf-8//IGNORE', trim($pages[1]));
-    
-    $categ = split('<div class="frame_content small">',$htmlcode);
-    $categ = split('</div>',$categ[1]);
-    $categCode = trim($categ[0]);
-    $parser = new phpHTMLParser($categCode);
-    $HTMLObject = $parser->parse_tags(array("a"));
-    $spans = $HTMLObject->getTagsByName("a");
-    foreach ($spans as $span) {
-         $cat = $cat.'/'.$span->innerHTML;
-   }
-    $cat = split('�������',$cat);
-    $ozonInfo['Topic'] = iconv('windows-1251', 'utf-8//IGNORE', $cat[1]); 
-     }
-     
-     
-     
-     
-     else
+    $htmlcode = str_replace("\t", "", str_replace("\r\n", "", iconv('windows-1251', 'utf-8//IGNORE', $htmlcode)));
+
+//echo $htmlcode;
+
+preg_match_all ('|<p>ISBN(.*);|iU', $htmlcode, $ozonisbn, PREG_SET_ORDER);
+$ozonInfo['ISBN'] = strip_tags($ozonisbn[0][1]);
+
+
+preg_match_all ('|<p>Издательство:(.*)</p>|iU', $htmlcode, $ozonpubl, PREG_SET_ORDER);
+$ozonInfo['Publisher'] = strip_tags($ozonpubl[0][1]);
+
+preg_match_all ('|<!-- Data\[COMMENT\] -->(.*)</td>|iU', $htmlcode, $ozonedit, PREG_SET_ORDER);
+$ozonInfo['Edition'] = strip_tags($ozonedit[0][1]);
+
+preg_match_all ('|<p>Серия:(.*)</p>|iU', $htmlcode, $ozonser, PREG_SET_ORDER);
+$ozonInfo['Series'] = strip_tags($ozonser[0][1]);
+
+preg_match_all ('~<p>(Автор: |Авторы: |Редактор: |Редакторы: | Составитель: | Составители: |Художник: |Художники: |Переводчик: |Переводчики: )(.*)</p>~iU', $htmlcode, $ozonauth, PREG_SET_ORDER);
+if(count($ozonauth) == 2){$ozonauth1 = strip_tags($ozonauth[0][0]); $ozonauth2 = strip_tags($ozonauth[1][0]);
+$ozonauth1 = strstr($ozonauth1, ':').' ('.mb_substr($ozonauth1, 0,6).'.)';
+$ozonauth2 = strstr($ozonauth2, ':').' ('.mb_substr($ozonauth2, 0,6).'.)';
+$ozonInfo['Author'] = $ozonauth1.'; '.$ozonauth2;
+}else{$ozonauth1 = strip_tags($ozonauth[0][0]);
+$ozonInfo['Author'] = strstr($ozonauth1, ':').' ('.mb_substr($ozonauth1, 0,6).'.)';}
+
+
+
+preg_match_all ('|Страниц</span></div><div class="techDescr"><span>(.*)\sстр.|iU', $htmlcode, $ozonpag, PREG_SET_ORDER);
+$ozonInfo['Pages'] = strip_tags($ozonpag[0][1]);
+
+preg_match_all ('|<h3>Каталог</h3>(.*)</div>|iU', $htmlcode, $ozontopic, PREG_SET_ORDER);
+$ozonInfo['Topic'] = str_replace('»', '//', strip_tags($ozontopic[0][1]));
+
+preg_match_all ('|<p>Языки:\s(.*)</p>|iU', $htmlcode, $ozonlang, PREG_SET_ORDER);
+$ozonInfo['Language'] = trim(strip_tags($ozonlang[0][1]));
+if($ozonInfo['Language'] == 'Русский'){$ozonInfo['Language'] = 'Russian';}
+elseif($ozonInfo['Language'] == 'Английский'){$ozonInfo['Language'] = 'English';}
+
+preg_match_all ('|<!-- Data\[ANNOTATION\] -->(.*)</td>|iU', $htmlcode, $ozonann, PREG_SET_ORDER);
+$ozonInfo['Annotation'] = trim(strip_tags($ozonann[0][1]));
+
+
+
+     }else
      {
          $ozonInfo['error'] = "Could not find item.\n";
      }
