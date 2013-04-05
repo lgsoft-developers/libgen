@@ -1,0 +1,15 @@
+/*	ns_tooltip.css
+	created by Nikita Seleckis
+	www.seleckis.lv
+*/
+
+#ns_tt{
+	position: absolute;
+	border: solid #AAAAAA 1px;
+	background-color: #DDDDDD;
+	font-family: TimesNewRoman;
+	font-size: 11px;
+	line-height: 14px;
+	padding: 2px 5px;
+	margin: -250px 0px 0px -800px;
+}
