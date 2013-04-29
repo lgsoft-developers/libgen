@@ -53,7 +53,7 @@ $page = "
 ".$LANG_MESS_78.":<br>
 <input name='uploadedfile' type='text' size=120/> 
 <input type='submit' value='".$LANG_MESS_88."'/><br>
-<font face=Arial color=gray size=1>".$LANG_MESS_90."<a href = 'ftp://libgen.org/!upload/'>FTP</a></font></form></td></tr>
+<font face=Arial color=gray size=1><a href = 'ftp://libgen.org/!upload/'>".$LANG_MESS_90."</a></font></form></td></tr>
 
 
 <!-- MD5-check-up Form -->
@@ -67,6 +67,7 @@ $page = "
 <font face=Arial size=2>
 ".$LANG_MESS_87."<br>
 ".$LANG_MESS_82.": <a href='http://magzDB.org/'>magzDB.org</a> ; <br>
+".$LANG_MESS_400.": <a href='http://libgen.org/scimag/librarian/'>Library Genesis: Scientific articles</a> ; <br>
 ".$LANG_MESS_83.": <a href='http://flibusta.net/'>flibusta.net</a> & <a href='http://lib.rus.ec/'>lib.rus.ec</a></font>
 </center>";
 

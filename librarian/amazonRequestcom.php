@@ -1,6 +1,7 @@
 <?php
 function amazonInfo($isbn, $public_key, $private_key){
  
+
     $result = array('error'=>'');
    $regions = array('com','de','co.uk','fr');
    

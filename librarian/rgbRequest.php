@@ -32,7 +32,7 @@ function RGBitems($record, $tag, $code)
     return $result;
 }
 
-$request = "http://lbc.rsl.ru/bib4md5/zg/zg.php?server=RSL&ISBN=" . $isbn;
+$request = "http://lbc.rsl.ru/bib4md5/zg/zg.php?server=RSL&Undef=" . $isbn;
 $response = file_get_contents($request);
 //echo $response;
 
