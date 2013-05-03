@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1401093150">
+    <data-source source="LOCAL" name="Data Source" product="MySQL" version="5.5.20" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.18 ( Revision: tonci.grgin@oracle.com-20110930151701-jfj14ddfq48ifkfq )" uuid="1bb5b0e2-d1a5-44b7-a735-deef1f8dd799">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost,localhost:8080/bookwarrior</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfdfdfd9dfc8dfdd</user-password>
+      <default-dialect>MySQL</default-dialect>
+      <libraries>
+        <library>
+          <url>jar://$PROJECT_DIR$/mysql-connector-java-5.1.18-bin.jar!/</url>
+        </library>
+        <library>
+          <url>file://$PROJECT_DIR$/mysql-connector-license.txt</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+
